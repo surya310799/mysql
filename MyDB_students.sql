@@ -145,5 +145,6 @@ select * from mydb.employee where dept_id like '__1';
 select * from mydb.employee order by emp_id asc;
 select * from mydb.employee order by emp_id desc;
 select * from mydb.employee order by emp_id;  /* default order is assending */
-
+/* nvl to handle null*/
+/* select date_of_joining, nvl(date_of_joining,'1999-01-01') from mydb.employee;  *//* for sql */
 select date_of_joining, ifnull(date_of_joining,'1999-01-01') from mydb.employee; 
