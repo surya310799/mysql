@@ -148,3 +148,15 @@ select * from mydb.employee order by emp_id;  /* default order is assending */
 /* nvl to handle null*/
 /* select date_of_joining, nvl(date_of_joining,'1999-01-01') from mydb.employee;  *//* for sql */
 select date_of_joining, ifnull(date_of_joining,'1999-01-01') from mydb.employee; 
+
+select emp_name,job, concat(emp_name,'-',job) from mydb.employee;
+select emp_name, upper(emp_name) from mydb.employee;
+select emp_name, lower(emp_name) from mydb.employee;
+select salary,right(salary,2) from mydb.employee;
+select salary,left(salary,2) from mydb.employee;
+select salary,trim(leading 2 from salary) from mydb.employee;
+select salary,trim(trailing 0 from salary) from mydb.employee;
+select salary,trim(both 0 from salary) from mydb.employee;
+select salary, rpad(salary,7,'/-') from mydb.employee;
+select salary, replace(salary,23,55) from mydb.employee;
+select date_of_joining, substr(date_of_joining,6,2) from mydb.employee;/* string name, starting position, ending position*/
