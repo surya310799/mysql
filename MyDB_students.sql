@@ -164,5 +164,40 @@ select emp_name, instr(emp_name,'a') from mydb.employee;
 select emp_name, reverse(emp_name) from mydb.employee;
 select emp_name, length(emp_name) from mydb.employee;
 select emp_name, concat(upper(substr(emp_name,1,1)),substr(emp_name,2,length(emp_name))) from mydb.employee;/*string 1st letter only upper */
+select * from mydb.employee;
+select emp_name, regexp_instr(emp_name, 'a|e|i|o|u',1,1,0) from mydb.employee;
+select emp_name, instr(emp_name, 'a') from mydb.employee;
+select emp_name, regexp_replace(emp_name, 'a|e|i|o|u','*') from mydb.employee;
+select emp_name, regexp_replace(emp_name, 'a|e|i|o|u','*',2,1) from mydb.employee;
+select emp_name, regexp_substr(emp_name, 'a|e|i|o|u',2,1) from mydb.employee;
+select salary, cast(salary as decimal) from mydb.employee;
+select cast(10 as decimal(4,2)) from dual;
+/* Analytical function */
+select *, dense_rank() over(order by salary desc) from mydb.employee;
+select *, dense_rank() over(partition by dept_id order by salary desc) as dept_wise_salary from mydb.employee;
+select *, rank() over(order by salary desc) from mydb.employee;
+select *, rank() over(partition by dept_id order by salary desc) as dept_wise_salary from mydb.employee;
+select *, first_value(salary) over(order by salary desc) from mydb.employee;
+select *, first_value(salary) over(partition by dept_id order by salary desc) from mydb.employee;
+select *, last_value(salary) over(partition by dept_id order by salary desc range between unbounded preceding and unbounded following) from mydb.employee;
+select * from mydb.products;
+select * from mydb.orders;
+create table mydb.orders (order_id int,product_id int,product_name varchar(20),qty int,order_date date);
+alter table mydb.orders modify product_name varchar(40);
+insert into mydb.orders (order_id,product_id,product_name,qty,order_date) values(1,101,'ASUS ExpertBook B1',1,'2022-02-22');
+insert into mydb.orders (order_id,product_id,product_name,qty,order_date) values(2,101,'ASUS ExpertBook B1',1,'2023-02-22');
+insert into mydb.orders (order_id,product_id,product_name,qty,order_date) values(3,102,'Realme Buds 2',1,'2022-05-23');
+insert into mydb.orders (order_id,product_id,product_name,qty,order_date) values(4,102,'Realme Buds 2',1,'2023-05-23');
+insert into mydb.orders (order_id,product_id,product_name,qty,order_date) values(5,103,'LG Ultragear IPS Gaming Monitor',1,'2022-07-27');
+insert into mydb.orders (order_id,product_id,product_name,qty,order_date) values(6,103,'LG Ultragear IPS Gaming Monitor',1,'2023-07-27');
 
+select *, lead(order_date) over(partition by product_id order by order_date asc) from mydb.orders;
+/* display 3rd lowest salary*/
+select * from(select emp_name,salary, dense_rank() over(order by salary asc)as r from mydb.employee) a where r=3;
 
+/* case statement*/
+select emp_name, salary, case when salary between 23000 and 30000 then 'associate'
+when salary between 31000 and 41000 then 'consultant'
+when salary between 42000 and 52000 then 'senior'
+when salary between 52000 and 85000 then 'super senior' else 'NA'
+end levels from mydb.employee;
