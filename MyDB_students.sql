@@ -160,3 +160,9 @@ select salary,trim(both 0 from salary) from mydb.employee;
 select salary, rpad(salary,7,'/-') from mydb.employee;
 select salary, replace(salary,23,55) from mydb.employee;
 select date_of_joining, substr(date_of_joining,6,2) from mydb.employee;/* string name, starting position, ending position*/
+select emp_name, instr(emp_name,'a') from mydb.employee;
+select emp_name, reverse(emp_name) from mydb.employee;
+select emp_name, length(emp_name) from mydb.employee;
+select emp_name, concat(upper(substr(emp_name,1,1)),substr(emp_name,2,length(emp_name))) from mydb.employee;/*string 1st letter only upper */
+
+
