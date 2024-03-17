@@ -201,3 +201,67 @@ when salary between 31000 and 41000 then 'consultant'
 when salary between 42000 and 52000 then 'senior'
 when salary between 52000 and 85000 then 'super senior' else 'NA'
 end levels from mydb.employee;
+
+/* to display half of the salary from dept id 100  */
+select dept_id,salary, case 
+when dept_id=100 then (salary/2)
+else salary
+end
+as salary from mydb.employee order by dept_id;
+
+use mydb;
+create view emp_dept_101 as select * from mydb.employee where dept_id=101;
+select * from emp_dept_101;
+insert into employee values(22,'kavi','developer','2021-09-23',101,35000,4);
+delete from employee where emp_id=22;
+
+/* with clause: common table expression */
+with
+a as (select * from employee where salary between 35000 and 55000),
+b as (select * from employee where dept_id in (100,101))
+select a.* from a inner join b on a.emp_id=b.emp_id;
+/* find all the employee whose salary is more than the average salary of all employee.salary > avg(salary) */
+with avg_sal as (select avg(salary) as a from employee)
+select emp_name,job,salary from employee , avg_sal where employee.salary>avg_sal.a;
+
+/* index */
+
+select * from supliers;
+create index suplier_idx on supliers (suplier_name);
+drop index suplier_idx on supliers;
+
+/* date functions */
+select adddate('2015-09-15', interval 20 day) from dual;
+select adddate('2015-09-15', interval 2 month) from dual;
+select adddate('2015-09-15', interval -1 year) from dual;
+
+select now();
+select current_date() from dual;
+select current_time() from dual;
+select current_timestamp() from dual;
+
+select now(), date_format(now(), '%d-%m-%y');
+select date_format(now(), '%d-%m-%y');
+select date_format(now(), '%y');
+
+select dayname(now());
+select monthname(now());
+select datediff(current_date(),'2023-04-14');
+select dayofmonth(current_date());
+select dayofweek(current_date());
+select dayofyear(current_date());
+
+select extract(month from '2023-05-15');
+select extract(year from current_date());
+select extract(day from current_date());
+select extract(hour from current_date());
+select extract(minute from current_date());
+select extract(second from current_date());
+select last_day('2024-02-15');
+select date_add(current_date(), interval 5 day), date_sub(current_date(), interval 10 day);
+select str_to_date(current_date(),'%Y');
+
+select str_to_date('5th Saturday September 2015', '%D %W %M %Y');
+select str_to_date('17th October 2023', '%D %M %Y');
+
+select weekofyear(current_date());
